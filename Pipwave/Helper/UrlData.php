@@ -16,7 +16,9 @@ class UrlData {
     const LOADING_IMAGE_URL_TEST = 'https://staging-checkout.Pipwave.com/images/loading.gif';
 
     //url for controller [get from magento]
+    const NOTIFICATION_URL = 'notification/notification/index';
+
+    //if merchant didnt provide, we use default
     const SUCCESS_URL = 'checkout/onepage/success';
     const FAIL_URL = 'checkout/onepage/failure';
-    const NOTIFICATION_URL = 'notification/notification/index';
 }
