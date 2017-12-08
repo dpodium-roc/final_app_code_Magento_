@@ -1,5 +1,5 @@
 <?php
-namespace Pipwave\CustomPayment\Block;
+namespace Magento\Pipwave\Block;
 
 class InformationNeeded extends \Magento\Framework\View\Element\Template
 {
@@ -31,10 +31,10 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
         \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory,
         \Magento\Sales\Model\Service\CreditmemoService $CreditmemoService,
         \Magento\Framework\App\ProductMetadataInterface $productMetadata,
-        \Pipwave\CustomPayment\Helper\Data $adminData,
-        \Pipwave\CustomPayment\Model\Url $urlLink,
-        \Pipwave\CustomPayment\Model\Order\Invoice $invoice,
-        \Pipwave\CustomPayment\Model\Order\Shipment $shipment
+        \Magento\Pipwave\Helper\Data $adminData,
+        \Magento\Pipwave\Model\Url $urlLink,
+        \Magento\Pipwave\Model\Order\Invoice $invoice,
+        \Magento\Pipwave\Model\Order\Shipment $shipment
     ) {
         $this->_storeManager = $storeManager;
         $this->customer = $customer;
@@ -48,7 +48,7 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
         $this->shipment = $shipment;
     }
 
-    //called in Pipwave\CustomPayment\Controller\Index\Index
+    //called in Magento\Pipwave\Controller\Index\Index
     function prepareData() {
         self::setDData();
         self::setSignatureParam();
@@ -77,19 +77,21 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
             $billAddress1 = implode(' ', $order->getBillingAddress()->getStreet());
         }
 
+        /*
         //if merchant provide success url use theirs, else our default
         if ($this->adminConfig->getSuccessUrl() == null) {
             $success_url = $this->urlLink->defaultSuccessPageUrl();
         } else {
             $success_url = $this->adminConfig->getSuccessUrl();
         }
-        
+
         //if merchant provide fail url use theirs, else our default
         if ($this->adminConfig->getFailUrl() == null) {
             $fail_url = $this->urlLink->defaultFailPageUrl();
         } else {
             $fail_url = $this->adminConfig->getFailUrl();
         }
+        */
 
         $this->data = array(
             'action' => 'initiate-payment', 
@@ -132,8 +134,8 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
                 'state' => $order->getBillingAddress()->getRegion(), 
             ), 
             'api_override' => array(
-                'success_url' => $success_url, 
-                'fail_url' => $fail_url, 
+                'success_url' => $this->urlLink->defaultSuccessPageUrl(),//$success_url, 
+                'fail_url' => $this->urlLink->defaultFailPageUrl(),//$fail_url, 
                 'notification_url' => $this->urlLink->notificationPageUrl(), //$notificationUrl, 
             ), 
         );
@@ -214,7 +216,7 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
     const PIPWAVE_SIGNATURE_MISMATCH = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
     const PIPWAVE_UNKNOWN_STATUS = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
 
-    //called in Pipwave\CustomPayment\Controller\Notification\Index
+    //called in Magento\Pipwave\Controller\Notification\Index
     function processNotification($transaction_status, $order, $refund_amount,$txn_sub_status)
     {
         switch ($transaction_status) {
