@@ -1,5 +1,5 @@
 <?php
-namespace Magento\Pipwave\Block;
+namespace Pipwave\CustomPayment\Block;
 
 class InformationNeeded extends \Magento\Framework\View\Element\Template
 {
@@ -31,10 +31,10 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
         \Magento\Sales\Model\Order\CreditmemoFactory $creditmemoFactory,
         \Magento\Sales\Model\Service\CreditmemoService $CreditmemoService,
         \Magento\Framework\App\ProductMetadataInterface $productMetadata,
-        \Magento\Pipwave\Helper\Data $adminData,
-        \Magento\Pipwave\Model\Url $urlLink,
-        \Magento\Pipwave\Model\Order\Invoice $invoice,
-        \Magento\Pipwave\Model\Order\Shipment $shipment
+        \Pipwave\CustomPayment\Helper\Data $adminData,
+        \Pipwave\CustomPayment\Model\Url $urlLink,
+        \Pipwave\CustomPayment\Model\Order\Invoice $invoice,
+        \Pipwave\CustomPayment\Model\Order\Shipment $shipment
     ) {
         $this->_storeManager = $storeManager;
         $this->customer = $customer;
@@ -48,7 +48,7 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
         $this->shipment = $shipment;
     }
 
-    //called in Magento\Pipwave\Controller\Index\Index
+    //called in Pipwave\CustomPayment\Controller\Index\Index
     function prepareData() {
         self::setDData();
         self::setSignatureParam();
@@ -83,7 +83,7 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
         } else {
             $success_url = $this->adminConfig->getSuccessUrl();
         }
-
+        
         //if merchant provide fail url use theirs, else our default
         if ($this->adminConfig->getFailUrl() == null) {
             $fail_url = $this->urlLink->defaultFailPageUrl();
@@ -214,7 +214,7 @@ class InformationNeeded extends \Magento\Framework\View\Element\Template
     const PIPWAVE_SIGNATURE_MISMATCH = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
     const PIPWAVE_UNKNOWN_STATUS = \Magento\Sales\Model\Order::STATE_PENDING_PAYMENT;
 
-    //called in Magento\Pipwave\Controller\Notification\Index
+    //called in Pipwave\CustomPayment\Controller\Notification\Index
     function processNotification($transaction_status, $order, $refund_amount,$txn_sub_status)
     {
         switch ($transaction_status) {
