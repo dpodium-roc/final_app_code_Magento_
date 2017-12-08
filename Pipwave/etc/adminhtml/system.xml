@@ -60,6 +60,22 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment><![CDATA[Shipping will be created automatically after buyer made payment. Auto-invoice must be enabled for this to work. Only select this if you are certain that the product will be shipped to reduce conplexity when dealing with cancellation or refund.]]></comment>
                     </field>
+
+
+                    <!-- fail_url-->
+                    <!--field id="fail_url" translate="label" 
+                    sortOrder="10" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Fail Url</label>
+                        <comment><![CDATA[Buyer will be redirected to this page if payment fail.]]></comment>
+                    </field-->
+                    
+                    <!-- success url-->
+                    <!--field id="success_url" translate="label" 
+                    sortOrder="10" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Success Url</label>
+                        <comment><![CDATA[Buyer will be redirected to this page if payment success.]]></comment>
+                    </field-->
+
                 </group>
             </section>
         </system>
