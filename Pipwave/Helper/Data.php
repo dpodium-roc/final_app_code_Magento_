@@ -20,6 +20,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     const PROCESSING_FEE = 'payment/custompayment/processing_fee';
     const AUTO_SHIPPING = 'payment/custompayment/auto_shipping';
     const AUTO_INVOICE = 'payment/custompayment/auto_invoice';
+    const FAIL_URL = 'payment/custompayment/fail_url';
+    const SUCCESS_URL = 'payment/custompayment/success_url';
 
     public function getApiKey() {
         return $this->scopeConfig->getValue(
@@ -62,6 +64,19 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->scopeConfig->getValue(
             self::AUTO_INVOICE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+    public function getFailUrl() {
+        return $this->scopeConfig->getValue(
+            self::FAIL_URL,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+    }
+    
+    public function getSuccessUrl() {
+        return $this->scopeConfig->getValue(
+            self::SUCCESS_URL,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
     }

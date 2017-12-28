@@ -8,6 +8,8 @@ Magento\Pipwave\view\adminhtml\template\order\view\info.phtml
 */
 class Info extends \Magento\Framework\View\Element\Template
 {
+    protected $adminConfig;
+
     protected $transaction_status;
     protected $refund;
     protected $txn_sub_status;
@@ -24,10 +26,12 @@ class Info extends \Magento\Framework\View\Element\Template
         \Magento\Pipwave\Model\NotificationInformationFactory $NotificationInformationFactory,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Element\Template\Context $context,
+        \Pipwave\CustomPayment\Helper\Data $adminData,
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
         $this->NotificationInformationFactory = $NotificationInformationFactory;
+        $this->adminConfig = $adminData;
         parent::__construct($context, $data);
     }
 
@@ -61,11 +65,13 @@ class Info extends \Magento\Framework\View\Element\Template
         //used in generate_pw_signature($signatureParam)
         $this->signatureParam = array(
             'timestamp' => $timestamp,
-            'pw_id' => $pw_id,
-            'txn_id' => $order_number,
-            'amount' => $amount,
-            'currency_code' => $currency_code,
-            'transaction_status' => $this->transaction_status,
+            'api_key' => $post_data['api_key'], 
+                'pw_id' => $pw_id, 
+                'txn_id' => $order_number, 
+                'amount' => $amount, 
+                'currency_code' => $currency_code, 
+                'transaction_status' => $this->transaction_status, 
+                'api_secret' => $this->adminConfig->getApiSecret() 
         );
 
         $this->data =[
