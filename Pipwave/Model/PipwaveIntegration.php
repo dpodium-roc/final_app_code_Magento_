@@ -23,7 +23,7 @@ class PipwaveIntegration {
     //called in Magento\Pipwave\Block\InformationNeeded.php
     function sendRequestToPw($data, $pw_api_key, $url, $agent) {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_PROXY, 'my-proxy.offgamers.lan:3128');
+        
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('x-api-key:' . $pw_api_key));
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
